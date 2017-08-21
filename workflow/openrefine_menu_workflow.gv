@@ -1,0 +1,69 @@
+digraph Workflow {
+rankdir=TB
+fontname=Courier; fontsize=18; labelloc=t
+label=OpenRefine_Menu
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; color=white
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+remove_special_characters
+cluster_keycollison_fingerprint
+copy_and_extract_dimension
+remove_dimension
+filter_outside_year_range_1851_2012
+export
+edge[fontname=Helvetica]
+remove_special_characters -> cluster_keycollison_fingerprint [label=name_t1]
+remove_special_characters -> cluster_keycollison_fingerprint [label=sponsor_t1]
+remove_special_characters -> cluster_keycollison_fingerprint [label=event_t1]
+remove_special_characters -> cluster_keycollison_fingerprint [label=venue_t1]
+remove_special_characters -> cluster_keycollison_fingerprint [label=place_t1]
+remove_dimension -> cluster_keycollison_fingerprint [label=physical_description_t1]
+remove_special_characters -> cluster_keycollison_fingerprint [label=occasion_t1]
+cluster_keycollison_fingerprint -> export [label=name_t2]
+cluster_keycollison_fingerprint -> export [label=sponsor_t2]
+cluster_keycollison_fingerprint -> export [label=event_t2]
+cluster_keycollison_fingerprint -> export [label=venue_t2]
+cluster_keycollison_fingerprint -> export [label=place_t2]
+cluster_keycollison_fingerprint -> export [label=physical_description_t2]
+cluster_keycollison_fingerprint -> export [label=occasion_t2]
+cluster_keycollison_fingerprint -> export [label=notes_t1]
+filter_outside_year_range_1851_2012 -> export [label=date_t1]
+cluster_keycollison_fingerprint -> export [label=location_t1]
+copy_and_extract_dimension -> export [label=dimension]
+}}
+subgraph cluster_input_ports_group_outer { label=""; color=white
+subgraph cluster_input_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+name_input_port [label=""]
+sponsor_input_port [label=""]
+event_input_port [label=""]
+venue_input_port [label=""]
+place_input_port [label=""]
+physical_description_input_port [label=""]
+occasion_input_port [label=""]
+notes_input_port [label=""]
+date_input_port [label=""]
+location_input_port [label=""]
+pass_thru_cols_input_port [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; color=white
+subgraph cluster_output_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+"Menu.csv.tsv_output_port" [label=""]
+}}
+edge[fontname=Helvetica]
+name_input_port -> remove_special_characters [label=name]
+sponsor_input_port -> remove_special_characters [label=sponsor]
+event_input_port -> remove_special_characters [label=event]
+venue_input_port -> remove_special_characters [label=venue]
+place_input_port -> remove_special_characters [label=place]
+physical_description_input_port -> copy_and_extract_dimension [label=physical_description]
+physical_description_input_port -> remove_dimension [label=physical_description]
+occasion_input_port -> remove_special_characters [label=occasion]
+notes_input_port -> cluster_keycollison_fingerprint [label=notes]
+date_input_port -> filter_outside_year_range_1851_2012 [label=date]
+location_input_port -> cluster_keycollison_fingerprint [label=location]
+pass_thru_cols_input_port -> export [label=pass_thru_cols]
+edge[fontname=Helvetica]
+export -> "Menu.csv.tsv_output_port" [label="Menu.csv.tsv"]
+}

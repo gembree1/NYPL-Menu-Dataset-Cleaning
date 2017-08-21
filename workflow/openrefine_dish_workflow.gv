@@ -1,0 +1,37 @@
+digraph Workflow {
+rankdir=TB
+fontname=Courier; fontsize=18; labelloc=t
+label=OpenRefine_Dish
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; color=white
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+"value.trim()"
+"value.replace(/\s+/,'')"
+"value.toLowercase()"
+"value.replace(value,"
+cluster_keycollison_fingerprint
+export
+edge[fontname=Helvetica]
+"value.trim()" -> "value.replace(/\s+/,'')" [label=name_t1]
+"value.replace(/\s+/,'')" -> "value.toLowercase()" [label=name_t2]
+"value.toLowercase()" -> "value.replace(value," [label=name_t3]
+"value.replace(value," -> cluster_keycollison_fingerprint [label=name_t4]
+cluster_keycollison_fingerprint -> export [label=name_t5]
+}}
+subgraph cluster_input_ports_group_outer { label=""; color=white
+subgraph cluster_input_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+name_input_port [label=""]
+pass_thru_cols_input_port [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; color=white
+subgraph cluster_output_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+"Dish.csv.tsv_output_port" [label=""]
+}}
+edge[fontname=Helvetica]
+name_input_port -> "value.trim()" [label=name]
+pass_thru_cols_input_port -> export [label=pass_thru_cols]
+edge[fontname=Helvetica]
+export -> "Dish.csv.tsv_output_port" [label="Dish.csv.tsv"]
+}
